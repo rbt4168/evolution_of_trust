@@ -1,30 +1,85 @@
-# evolution-of-trust
-A Python implementation of the iterated prisoner's dilemma, inspired by the 'Evolution of Trust' by Nicky Case ([game](https://ncase.me/trust/), [github](https://github.com/ncase/trust)).
+## 一篇關於信任的小研究
 
-Run by evaluating `print_statistics` on a list of bots, such as
-```
-print_statistics([
-    Random(),
-    Cooperator(),
-    Cheater(),
+閒來無事，看到一個在講關於人際信任策略的遊戲，覺得頗為有趣，於是就弄了一些實驗來玩。
 
-    Copycat(),
-    Copykitten(),
-    Copy3kitten(),
+有興趣想自己研究，可以先看這裡 https://audreyt.github.io/trust-zh-TW/
 
-    NegtiveCopycat(),
-    NegtiveCopykitten(),
+好，要開始了...
 
-    Grudger(),
-])
-```
+### 遊戲設定
 
-This should return a (non-deterministic) score table, higher is better, such as
-```
-378     AlwaysBetray
-253     Random
-203     Copycat
-134     AlwaysCooperate
-```
+假設每個人在關係中都有兩種選擇，合作或背叛。
+通常情況下，雙方合作能帶來雙贏，而背叛往往可以獲得更大的短期利益。
+然而，如果雙方都選擇背叛，則雙方皆會沒有收益。因此，我們可以寫出以下收益表：
+![payoff](https://hackmd.io/_uploads/ByzomcVTC.png)
 
-Pull requests that add more bots are welcome.
+這個收益結構有一個特點：
+如果只玩一場遊戲，為了最大化個人收益，沒有人會選擇合作。
+但好玩之處就在於，現實中的合作有時會是長期的。
+如果需要多次合作，為了雙方的共同利益著想，就需要考量形成雙贏情形的信任問題。
+
+基於此，我放進了幾種簡單的策略，並分別對不同合作期望次數 (以柏松分布取樣) 進行了 100 局遊戲的模擬：
+
+1. 隨機策略：50% 合作，50% 背叛。
+2. 好人策略：100% 合作。
+3. 壞人策略：100% 背叛。
+4. 複製策略：第一次選擇合作，之後複製對方上一輪的選擇。
+5. 黑道策略：一直合作，直到對方背叛一次，之後持續背叛。
+
+![plot_o110](https://hackmd.io/_uploads/HJifQ_4pC.png)
+
+從模擬中可以看出，當期望的合作次數超過三次時，壞人策略就無法繼續生存，因為它無法建立良好的信任。能存活下來的策略是好人策略、黑道策略和複製策略。
+
+### 失誤率
+
+現實中，人們有時會無意中傷害到對方，有時合作也會因訊息傳遞偏差造成失誤。因此，我在模擬中導入了失誤率，並將合作期望長度先設定為 7 次（λ = 7 的泊松分布）並進行模擬。
+
+![plot_1o7](https://hackmd.io/_uploads/H1iCduE6R.png)
+
+加入失誤率後，黑道策略和複製策略表現最佳。但這是否意味著只要對方犯一次錯誤，就應該持續背叛？或者說在面對偶然失誤時，我們也應該以牙還牙嗎？
+
+為此，需要加入第六種策略：
+
+6. 容忍策略：選擇合作，但如果對方連續背叛兩次，則開始複製對方的動作。
+
+![plot_2o7](https://hackmd.io/_uploads/ryAR__4TA.png)
+
+可以看到，容忍策略加入使黑道策略和複製策略明顯被淘汰。
+
+那假設我們再更進一步提升容忍程度
+7. 超容忍策略：選擇合作，若對方連續背叛三次才開始複製對方的動作。
+
+![plot_3o7](https://hackmd.io/_uploads/BkWs5O4aC.png)
+
+結果顯示，超容忍策略與容忍策略表現相似，且在高失誤率的情況下，能有效壓制壞人策略。
+
+### 更多實驗
+
+為了更多樣的分析，我又加入了兩種策略，並大規模模擬這些策略在不同情境下的收益：
+8. 保守策略：第一次選擇背叛，之後複製對方上一輪的選擇。
+9. 超保守策略：選擇背叛，若對方連續合作兩次則複製對方的動作。
+
+模擬範圍涵蓋 1-10 次合作的情況，以及 0-0.5 的失誤率。
+![plot_10](https://hackmd.io/_uploads/Hk8zgYV6R.png)
+
+### 結論
+
+當預計合作次數在兩次以下時，前三名策略是壞人策略、超保守策略和保守策略。
+預計合作次數在三次時，沒有策略特別突出。
+預計合作次數在四次以上時，表現最佳的前三名是超容忍策略、容忍策略和複製策略。
+
+也就是說，這環境中存在一個具良好適應性的策略：在預期只有短期合作時只進行背叛，而在長期合作時則盡量寬容。
+
+### 其他
+
+比較特別的是，這是預計合作 100 次的數據。雖然在現實人際關係中，除了親屬關係，很少會有合作多達 100 次的情況。
+
+至於為何會出現這種結果，合理的猜測是，長期合作的環境中，人們互相容忍，導致那些「什麼都亂搞」的人反而獲得了最大的利益。
+
+![plot_3o100](https://hackmd.io/_uploads/BJ0SFKEaA.png)
+
+### source code
+
+https://github.com/svavil/evolution-of-trust.git
+
+
