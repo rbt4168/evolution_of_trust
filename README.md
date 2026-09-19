@@ -34,7 +34,7 @@ Based on this idea, I introduced several simple strategies and simulated 100 gam
 
 The simulation shows that when the expected number of interactions exceeds three, the Mean Strategy can no longer survive because it is unable to establish trust.
 
-The strategies that remain successful are the Nice Strategy, the Gangster Strategy, and the Copycat Strategy.
+The strategies that remain successful are the Cooperator Strategy, the Grudger Strategy, and the Copycat Strategy.
 
 ### Error Rate
 
@@ -44,7 +44,7 @@ To model this behavior, I introduced an error rate into the simulation. I fixed 
 
 ![plot\_1o7](https://hackmd.io/_uploads/H1iCduE6R.png)
 
-After introducing errors, the Gangster Strategy and the Copycat Strategy performed best.
+After introducing errors, the Grudger Strategy and the Copycat Strategy performed best.
 
 However, does this mean that we should permanently betray someone after a single mistake? Should we always respond to accidental harm with immediate retaliation?
 
@@ -54,7 +54,7 @@ To investigate this question, I introduced a sixth strategy:
 
 ![plot\_2o7](https://hackmd.io/_uploads/ryAR__4TA.png)
 
-The results show that after the Tolerant Strategy is introduced, the Gangster Strategy and the Copycat Strategy are clearly outperformed.
+The results show that after the Copykitten Strategy is introduced, the Grudger Strategy and the Copycat Strategy are clearly outperformed.
 
 Next, I increased the level of tolerance even further:
 
@@ -62,7 +62,7 @@ Next, I increased the level of tolerance even further:
 
 ![plot\_3o7](https://hackmd.io/_uploads/BkWs5O4aC.png)
 
-The results show that the Highly Tolerant Strategy performs similarly to the Tolerant Strategy. Under high error rates, both strategies are also effective at suppressing the Mean Strategy.
+The results show that the Copy3kitten Strategy performs similarly to the Copykitten Strategy. Under high error rates, both strategies are also effective at suppressing the Grudger Strategy.
 
 ### Additional Experiments
 
@@ -77,11 +77,11 @@ The simulations covered expected interaction lengths from 1 to 10 and error rate
 
 ### Conclusion
 
-When the expected number of interactions is two or fewer, the three best-performing strategies are the Mean Strategy, the Highly Cautious Strategy, and the Cautious Strategy.
+When the expected number of interactions is two or fewer, the three best-performing strategies are the Cheater Strategy, the NegtiveCopykitten Strategy, and the NegtiveCopycat Strategy.
 
 When the expected number of interactions is three, no strategy is clearly dominant.
 
-When the expected number of interactions is four or more, the three best-performing strategies are the Highly Tolerant Strategy, the Tolerant Strategy, and the Copycat Strategy.
+When the expected number of interactions is four or more, the three best-performing strategies are the Copy3kitten Strategy, the Copykitten Strategy, and the Copycat Strategy.
 
 In other words, this environment suggests the existence of a broadly adaptive strategy:
 
