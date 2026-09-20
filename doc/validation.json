@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "settings": 231,
+  "replicates": 231000,
+  "unique_seeds": 231000,
+  "summary_rows": 2079,
+  "population_per_replicate": 36,
+  "checks": [
+    "all saved seeds match deterministic generator",
+    "globally unique seeds",
+    "nonnegative integer counts",
+    "population conservation",
+    "summary means, standard errors and confidence intervals match raw samples",
+    "30-run comparison matches raw samples"
+  ]
+}

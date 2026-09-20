@@ -1,0 +1,41 @@
+{
+  "samples": 1000,
+  "lengths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    100
+  ],
+  "error_points": 21,
+  "generations": 100,
+  "seed": 20260920,
+  "threads": 8,
+  "output": "results\\high_sample",
+  "resume": true,
+  "python": "3.10.11",
+  "numpy": "1.26.4",
+  "numba": "0.61.2",
+  "strategies": [
+    "Random",
+    "Cooperator",
+    "Cheater",
+    "Copycat",
+    "Copykitten",
+    "Copy3kitten",
+    "NegtiveCopycat",
+    "NegtiveCopykitten",
+    "Grudger"
+  ],
+  "population": 36,
+  "elimination": 3,
+  "error_model": "cooperation-only; randint(0,100) < 100 * nominal_error",
+  "uncertainty": "pointwise normal 95% Monte Carlo CI of mean final population share",
+  "elapsed_seconds": 834.7698719000018
+}
